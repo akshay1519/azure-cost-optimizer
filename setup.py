@@ -21,7 +21,7 @@ setup(
         "azure-mgmt-compute>=30.0.0",
         "azure-mgmt-network>=25.0.0",
         "azure-mgmt-monitor>=6.0.0",
-        "azure-mgmt-resource>=23.0.0",
+        "azure-mgmt-resource>=23.0.0,<24.0.0",
         "azure-mgmt-policyinsights>=1.0.0",
         "azure-monitor-query>=1.2.0",
     ],

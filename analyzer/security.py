@@ -240,7 +240,7 @@ AzureDiagnostics
 
         if response.status == LogsQueryStatus.SUCCESS:
             for table in response.tables:
-                columns = [col.name for col in table.columns]
+                columns = [col if isinstance(col, str) else col.name for col in table.columns]
                 for row in table.rows:
                     row_dict = dict(zip(columns, row))
 
@@ -260,7 +260,7 @@ AzureDiagnostics
         elif response.status == LogsQueryStatus.PARTIAL:
             logger.warning(f"Partial results for {query_name}: {response.partial_error}")
             for table in response.partial_data:
-                columns = [col.name for col in table.columns]
+                columns = [col if isinstance(col, str) else col.name for col in table.columns]
                 for row in table.rows:
                     row_dict = dict(zip(columns, row))
                     alert = SecurityAlert(

@@ -173,7 +173,7 @@ class AzureScanner:
 
             metrics = self.monitor_client.metrics.list(
                 resource_uri=resource_id,
-                timespan=f"{start_time.isoformat()}/{end_time.isoformat()}",
+                timespan=f"{start_time.strftime('%Y-%m-%dT%H:%M:%SZ')}/{end_time.strftime('%Y-%m-%dT%H:%M:%SZ')}",
                 interval="PT1H",
                 metricnames="Percentage CPU",
                 aggregation="Average",
@@ -199,7 +199,7 @@ class AzureScanner:
 
             metrics = self.monitor_client.metrics.list(
                 resource_uri=resource_id,
-                timespan=f"{start_time.isoformat()}/{end_time.isoformat()}",
+                timespan=f"{start_time.strftime('%Y-%m-%dT%H:%M:%SZ')}/{end_time.strftime('%Y-%m-%dT%H:%M:%SZ')}",
                 interval="PT1H",
                 metricnames="Network In Total,Network Out Total",
                 aggregation="Total",

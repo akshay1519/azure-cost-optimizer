@@ -13,7 +13,8 @@ from typing import Optional
 
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.policyinsights import PolicyInsightsClient
-from azure.mgmt.resource import PolicyClient
+from azure.mgmt.policyinsights.models import QueryOptions
+from azure.mgmt.resource.policy import PolicyClient
 
 logger = logging.getLogger(__name__)
 
@@ -106,17 +107,20 @@ class ComplianceScanner:
         try:
             # Get policy states summary
             summary = self.insights_client.policy_states.summarize_for_subscription(
-                policy_states_summary_resource="latest",
                 subscription_id=self.subscription_id,
             )
 
             if summary.value:
                 for summary_item in summary.value:
                     if summary_item.results:
-                        report.total_policies = summary_item.results.total_policies_count or 0
-                        report.non_compliant_count = (
-                            summary_item.results.non_compliant_policies or 0
-                        )
+                        # Calculate total from resource_details (compliant + noncompliant)
+                        non_compliant_resources = summary_item.results.non_compliant_resources or 0
+                        total_resources = non_compliant_resources
+                        for rd in (summary_item.results.resource_details or []):
+                            if rd.compliance_state and rd.compliance_state.lower() != "noncompliant":
+                                total_resources += (rd.count or 0)
+                        report.total_policies = total_resources
+                        report.non_compliant_count = non_compliant_resources
 
                     # Process individual policy assignments
                     for pa in (summary_item.policy_assignments or []):
@@ -131,7 +135,7 @@ class ComplianceScanner:
             query_results = self.insights_client.policy_states.list_query_results_for_subscription(
                 policy_states_resource="latest",
                 subscription_id=self.subscription_id,
-                query_options={"filter": "complianceState eq 'NonCompliant'", "top": 500},
+                query_options=QueryOptions(filter="complianceState eq 'NonCompliant'", top=500),
             )
 
             for state in query_results:
@@ -159,8 +163,15 @@ class ComplianceScanner:
     def _process_policy_assignment(self, report: ComplianceReport, pa):
         """Process a single policy assignment summary."""
         if pa.results:
-            compliant = pa.results.compliant_resources or 0
             non_compliant = pa.results.non_compliant_resources or 0
+            # Derive compliant count from resource_details
+            compliant = 0
+            for rd in (pa.results.resource_details or []):
+                state = (rd.compliance_state or "").lower()
+                if state in ("compliant",):
+                    compliant += (rd.count or 0)
+                elif state == "exempt":
+                    report.exempt_count += (rd.count or 0)
             report.compliant_count += compliant
             report.non_compliant_count += non_compliant
 

@@ -187,6 +187,7 @@ class ReportGenerator:
 
         by_severity = self._count_by_severity()
         by_category = self._count_by_category()
+        high_severity_count = by_severity.get('high', {}).get('count', 0)
 
         category_rows = ""
         for cat, info in sorted(by_category.items(), key=lambda x: -x[1]["savings"]):
@@ -251,7 +252,7 @@ class ReportGenerator:
             </div>
             <div class="card">
                 <h3>High Severity</h3>
-                <div class="value">{by_severity.get('high', {{}}).get('count', 0)}</div>
+                <div class="value">{high_severity_count}</div>
             </div>
         </div>
 
