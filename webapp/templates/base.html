@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Azure Cost Optimizer{% endblock %}</title>
+    <meta name="description" content="Save up to 30% on Azure bills. Scan for idle VMs, oversized resources, compliance gaps, and security issues.">
+    <meta name="keywords" content="Azure cost optimization, Azure cost savings, idle VM detection, Azure compliance, Azure security">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">⚡</span> Azure Cost Optimizer
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/pricing">Pricing</a>
+                {% if session.get('user_email') %}
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/logout" class="btn btn-outline btn-sm">Logout</a>
+                {% else %}
+                    <a href="/login" class="btn btn-primary btn-sm">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+            <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Azure Cost Optimizer by Akshaykumar Glasswala</p>
+            <p>
+                <a href="https://github.com/AkshaykumarGlasswala/azure-cost-optimizer">GitHub</a> &middot;
+                <a href="https://github.com/sponsors/AkshaykumarGlasswala">Sponsor</a> &middot;
+                <a href="/pricing">Pricing</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

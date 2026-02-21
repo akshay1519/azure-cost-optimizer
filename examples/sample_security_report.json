@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "tool": "Azure Cost Optimizer - Security Module",
+    "version": "1.0.0",
+    "generated_at": "2026-02-21T10:30:00Z",
+    "workspace_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "summary": {
+    "total_alerts": 12,
+    "by_severity": {
+      "critical": 1,
+      "high": 5,
+      "medium": 4,
+      "low": 2
+    },
+    "by_category": {
+      "identity": 5,
+      "resource": 2,
+      "sentinel": 1,
+      "security_center": 2,
+      "data_protection": 2
+    },
+    "critical_count": 1,
+    "high_count": 5
+  },
+  "alerts": [
+    {
+      "alert_id": "privilege_escalation_001",
+      "title": "Privilege Escalation Events",
+      "severity": "critical",
+      "category": "identity",
+      "description": "Privilege escalation: Add member to role - Global Administrator initiated by admin@contoso.com.",
+      "affected_resource": "admin@contoso.com",
+      "timestamp": "2026-02-20T14:32:00Z",
+      "recommendation": "Review Azure AD sign-in logs, enable MFA, and consider Conditional Access policies."
+    },
+    {
+      "alert_id": "failed_signins_001",
+      "title": "Brute Force / Failed Sign-in Attempts",
+      "severity": "high",
+      "category": "identity",
+      "description": "User 'service-account@contoso.com' had 847 failed sign-in attempts from 23 distinct IPs on app 'Azure Portal'.",
+      "affected_resource": "service-account@contoso.com",
+      "timestamp": "2026-02-21T03:15:00Z",
+      "recommendation": "Review Azure AD sign-in logs, enable MFA, and consider Conditional Access policies."
+    },
+    {
+      "alert_id": "failed_signins_002",
+      "title": "Brute Force / Failed Sign-in Attempts",
+      "severity": "high",
+      "category": "identity",
+      "description": "User 'developer@contoso.com' had 132 failed sign-in attempts from 8 distinct IPs.",
+      "affected_resource": "developer@contoso.com",
+      "timestamp": "2026-02-20T22:00:00Z",
+      "recommendation": "Review Azure AD sign-in logs, enable MFA, and consider Conditional Access policies."
+    },
+    {
+      "alert_id": "resource_deletions_001",
+      "title": "Mass Resource Deletions",
+      "severity": "high",
+      "category": "resource",
+      "description": "User 'deploy-bot@contoso.com' deleted 47 resources in one hour.",
+      "affected_resource": "deploy-bot@contoso.com",
+      "timestamp": "2026-02-19T16:00:00Z",
+      "recommendation": "Audit Azure Activity logs, review RBAC permissions, and enable resource locks on critical resources."
+    },
+    {
+      "alert_id": "sentinel_incident_001",
+      "title": "Azure Sentinel Incidents",
+      "severity": "high",
+      "category": "sentinel",
+      "description": "Sentinel Incident #1042: Suspicious sign-in activity from Tor exit node — Multiple users affected.",
+      "affected_resource": "Incident #1042",
+      "timestamp": "2026-02-21T08:30:00Z",
+      "recommendation": "Investigate open incidents in Azure Sentinel, assign to analysts, and update playbooks."
+    },
+    {
+      "alert_id": "security_alert_001",
+      "title": "Security Center Alerts",
+      "severity": "high",
+      "category": "security_center",
+      "description": "Security Alert: Suspicious process execution detected (High severity). A process typically not associated with the host was detected.",
+      "affected_resource": "/subscriptions/.../virtualMachines/web-server-01",
+      "timestamp": "2026-02-20T11:00:00Z",
+      "recommendation": "Review Defender for Cloud recommendations and remediate high-severity alerts."
+    },
+    {
+      "alert_id": "suspicious_signin_001",
+      "title": "Suspicious Sign-in Locations",
+      "severity": "medium",
+      "category": "identity",
+      "description": "Suspicious sign-in for 'cfo@contoso.com' from Nigeria (IP: 102.89.x.x) with risk level: high.",
+      "affected_resource": "cfo@contoso.com",
+      "timestamp": "2026-02-21T06:45:00Z",
+      "recommendation": "Review Azure AD sign-in logs, enable MFA, and consider Conditional Access policies."
+    },
+    {
+      "alert_id": "keyvault_001",
+      "title": "Sensitive Key Vault Operations",
+      "severity": "medium",
+      "category": "data_protection",
+      "description": "High-volume Key Vault access: 87 SecretGet operations from unknown-service@contoso.com.",
+      "affected_resource": "unknown-service@contoso.com",
+      "timestamp": "2026-02-21T02:00:00Z",
+      "recommendation": "Review Key Vault access policies, enable soft-delete and purge protection."
+    }
+  ],
+  "errors": []
+}

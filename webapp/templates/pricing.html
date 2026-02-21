@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Pricing - Azure Cost Optimizer{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Simple, Transparent Pricing</h1>
+    <p class="text-center text-muted">Start free. Upgrade when you need automated scans.</p>
+
+    <div class="pricing-grid">
+        <!-- Free Tier -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h3>Free</h3>
+                <div class="price">$0 <span>/month</span></div>
+            </div>
+            <ul class="pricing-features">
+                <li>✓ 1 manual scan</li>
+                <li>✓ All resource checks</li>
+                <li>✓ JSON & HTML reports</li>
+                <li>✓ CLI access</li>
+                <li class="disabled">✗ Automated scans</li>
+                <li class="disabled">✗ Email reports</li>
+                <li class="disabled">✗ Priority support</li>
+            </ul>
+            <a href="/login" class="btn btn-outline btn-block">Get Started</a>
+        </div>
+
+        <!-- Basic Tier -->
+        <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-header">
+                <h3>Basic</h3>
+                <div class="price">$20 <span>/month</span></div>
+            </div>
+            <ul class="pricing-features">
+                <li>✓ Unlimited scans</li>
+                <li>✓ All resource checks</li>
+                <li>✓ All report formats</li>
+                <li>✓ Weekly automated scans</li>
+                <li>✓ Email reports</li>
+                <li>✓ Compliance module</li>
+                <li class="disabled">✗ Security module</li>
+            </ul>
+            <a href="/checkout/basic" class="btn btn-primary btn-block">Subscribe</a>
+        </div>
+
+        <!-- Pro Tier -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h3>Pro</h3>
+                <div class="price">$50 <span>/month</span></div>
+            </div>
+            <ul class="pricing-features">
+                <li>✓ Everything in Basic</li>
+                <li>✓ Daily automated scans</li>
+                <li>✓ Security anomaly detection</li>
+                <li>✓ Sentinel log analysis</li>
+                <li>✓ API access</li>
+                <li>✓ Priority support</li>
+                <li>✓ Custom thresholds</li>
+            </ul>
+            <a href="/checkout/pro" class="btn btn-outline btn-block">Subscribe</a>
+        </div>
+    </div>
+
+    <!-- GitHub Sponsors -->
+    <div class="sponsors-section">
+        <h2>Prefer Open Source?</h2>
+        <p>
+            This tool is fully open source under the MIT license.
+            If it saves your team money, consider sponsoring development:
+        </p>
+        <div class="sponsor-tiers">
+            <a href="https://github.com/sponsors/AkshaykumarGlasswala" class="sponsor-card" target="_blank">
+                <strong>$5/month</strong> — Community Supporter (name in README)
+            </a>
+            <a href="https://github.com/sponsors/AkshaykumarGlasswala" class="sponsor-card" target="_blank">
+                <strong>$20/month</strong> — Priority Updates (early access to features)
+            </a>
+            <a href="https://github.com/sponsors/AkshaykumarGlasswala" class="sponsor-card" target="_blank">
+                <strong>$50/month</strong> — SaaS Access (hosted dashboard included)
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

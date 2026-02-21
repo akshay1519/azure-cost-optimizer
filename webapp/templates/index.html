@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Azure Cost Optimizer - Save 30% on Azure Bills{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>Stop Overpaying for Azure</h1>
+        <p class="hero-subtitle">
+            Scan your Azure subscription in minutes. Find idle VMs, oversized resources,
+            orphaned disks, and compliance gaps. <strong>Save up to 30% on your monthly bill.</strong>
+        </p>
+        <div class="hero-cta">
+            <a href="/login" class="btn btn-primary btn-lg">Start Free Scan</a>
+            <a href="https://github.com/AkshaykumarGlasswala/azure-cost-optimizer" class="btn btn-outline btn-lg" target="_blank">
+                View on GitHub ★
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">What We Scan</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Idle VMs</h3>
+                <p>Detect virtual machines running with &lt;5% CPU for 14+ days. Stop paying for compute you're not using.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📏</div>
+                <h3>Oversized Resources</h3>
+                <p>Find VMs using &lt;10% CPU on average — downsize and save 50% instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💿</div>
+                <h3>Orphaned Disks</h3>
+                <p>Unattached managed disks silently burn money. We find and flag every one.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Unused Public IPs</h3>
+                <p>Public IPs not attached to any resource cost $3.65/month each. Clean them up.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>Old Snapshots</h3>
+                <p>Snapshots older than 30 days pile up fast. We flag forgotten ones for deletion.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Compliance & Security</h3>
+                <p>Audit Azure Policy compliance and scan Sentinel logs for anomalies — all in one tool.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Connect</h3>
+                <p>Authenticate with Azure using DefaultAzureCredential (CLI, managed identity, or service principal).</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Scan</h3>
+                <p>We query Azure Monitor metrics, compute resources, and policy states across your subscription.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Report</h3>
+                <p>Get a detailed report with specific savings per resource — in JSON, HTML, or CSV.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <h2>Ready to Cut Your Azure Bill?</h2>
+        <p>Join hundreds of teams already saving thousands per month.</p>
+        <a href="/login" class="btn btn-primary btn-lg">Start Free Scan</a>
+    </div>
+</section>
+{% endblock %}

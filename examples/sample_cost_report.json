@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "tool": "Azure Cost Optimizer",
+    "version": "1.0.0",
+    "generated_at": "2026-02-21T10:30:00Z"
+  },
+  "subscription": {
+    "id": "12345678-abcd-1234-efgh-123456789012",
+    "name": "Contoso Production"
+  },
+  "summary": {
+    "total_findings": 8,
+    "total_monthly_waste": 1247.53,
+    "total_annual_waste": 14970.36,
+    "by_severity": {
+      "high": { "count": 3, "savings": 841.00 },
+      "medium": { "count": 3, "savings": 383.30 },
+      "low": { "count": 2, "savings": 23.23 }
+    },
+    "by_category": {
+      "idle_vm": { "count": 2, "savings": 560.64 },
+      "oversized_vm": { "count": 2, "savings": 210.24 },
+      "unattached_disk": { "count": 2, "savings": 213.42 },
+      "unused_public_ip": { "count": 1, "savings": 3.65 },
+      "old_snapshot": { "count": 1, "savings": 19.58 }
+    }
+  },
+  "findings": [
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-prod/providers/Microsoft.Compute/virtualMachines/api-server-01",
+      "resource_name": "api-server-01",
+      "resource_group": "rg-prod",
+      "category": "idle_vm",
+      "severity": "high",
+      "current_cost_monthly": 280.32,
+      "estimated_savings_monthly": 280.32,
+      "recommendation": "VM 'api-server-01' has avg CPU 1.8% over 14 days with minimal network traffic. Consider deallocating or deleting. Potential savings: $280.32/month.",
+      "details": {
+        "vm_size": "Standard_D8s_v3",
+        "avg_cpu_percent": 1.8,
+        "network_bytes": 45231,
+        "location": "eastus"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-staging/providers/Microsoft.Compute/virtualMachines/staging-web-02",
+      "resource_name": "staging-web-02",
+      "resource_group": "rg-staging",
+      "category": "idle_vm",
+      "severity": "high",
+      "current_cost_monthly": 280.32,
+      "estimated_savings_monthly": 280.32,
+      "recommendation": "VM 'staging-web-02' has avg CPU 0.5% over 14 days with minimal network traffic. Consider deallocating. Potential savings: $280.32/month.",
+      "details": {
+        "vm_size": "Standard_D8s_v3",
+        "avg_cpu_percent": 0.5,
+        "network_bytes": 12043,
+        "location": "eastus"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-prod/providers/Microsoft.Compute/virtualMachines/db-server-01",
+      "resource_name": "db-server-01",
+      "resource_group": "rg-prod",
+      "category": "oversized_vm",
+      "severity": "medium",
+      "current_cost_monthly": 280.32,
+      "estimated_savings_monthly": 140.16,
+      "recommendation": "VM 'db-server-01' (standard_d8s_v3) has avg CPU 7.2%. Downsize to standard_d4s_v3 to save $140.16/month.",
+      "details": {
+        "current_size": "standard_d8s_v3",
+        "suggested_size": "standard_d4s_v3",
+        "avg_cpu_percent": 7.2,
+        "location": "eastus"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-dev/providers/Microsoft.Compute/virtualMachines/dev-ml-01",
+      "resource_name": "dev-ml-01",
+      "resource_group": "rg-dev",
+      "category": "oversized_vm",
+      "severity": "medium",
+      "current_cost_monthly": 140.16,
+      "estimated_savings_monthly": 70.08,
+      "recommendation": "VM 'dev-ml-01' (standard_d4s_v3) has avg CPU 3.1%. Downsize to standard_d2s_v3 to save $70.08/month.",
+      "details": {
+        "current_size": "standard_d4s_v3",
+        "suggested_size": "standard_d2s_v3",
+        "avg_cpu_percent": 3.1,
+        "location": "westus2"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-prod/providers/Microsoft.Compute/disks/data-disk-old",
+      "resource_name": "data-disk-old",
+      "resource_group": "rg-prod",
+      "category": "unattached_disk",
+      "severity": "medium",
+      "current_cost_monthly": 140.21,
+      "estimated_savings_monthly": 140.21,
+      "recommendation": "Disk 'data-disk-old' (256GB, Premium_LRS) is unattached. Delete to save $140.21/month.",
+      "details": {
+        "disk_size_gb": 256,
+        "sku": "Premium_LRS",
+        "location": "eastus",
+        "time_created": "2025-03-15T08:30:00Z"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-dev/providers/Microsoft.Compute/disks/test-disk-01",
+      "resource_name": "test-disk-01",
+      "resource_group": "rg-dev",
+      "category": "unattached_disk",
+      "severity": "medium",
+      "current_cost_monthly": 73.21,
+      "estimated_savings_monthly": 73.21,
+      "recommendation": "Disk 'test-disk-01' (128GB, Standard_LRS) is unattached. Delete to save $73.21/month.",
+      "details": {
+        "disk_size_gb": 128,
+        "sku": "Standard_LRS",
+        "location": "eastus"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-dev/providers/Microsoft.Network/publicIPAddresses/old-lb-ip",
+      "resource_name": "old-lb-ip",
+      "resource_group": "rg-dev",
+      "category": "unused_public_ip",
+      "severity": "low",
+      "current_cost_monthly": 3.65,
+      "estimated_savings_monthly": 3.65,
+      "recommendation": "Public IP 'old-lb-ip' (40.112.0.123) is not associated with any resource. Delete to save $3.65/month.",
+      "details": {
+        "ip_address": "40.112.0.123",
+        "allocation_method": "Static",
+        "sku": "Basic",
+        "location": "eastus"
+      }
+    },
+    {
+      "resource_id": "/subscriptions/12345678-abcd/resourceGroups/rg-prod/providers/Microsoft.Compute/snapshots/backup-snap-2025-06",
+      "resource_name": "backup-snap-2025-06",
+      "resource_group": "rg-prod",
+      "category": "old_snapshot",
+      "severity": "low",
+      "current_cost_monthly": 19.58,
+      "estimated_savings_monthly": 19.58,
+      "recommendation": "Snapshot 'backup-snap-2025-06' is 265 days old (391GB). Delete to save $19.58/month.",
+      "details": {
+        "disk_size_gb": 391,
+        "age_days": 265,
+        "time_created": "2025-06-01T00:00:00Z",
+        "location": "eastus"
+      }
+    }
+  ],
+  "errors": []
+}

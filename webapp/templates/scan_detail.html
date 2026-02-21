@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Scan Results - Azure Cost Optimizer{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <div>
+            <h1>Scan Results</h1>
+            <p>
+                Subscription: {{ report.subscription.name }}
+                ({{ report.subscription.id[:8] }}...)
+                &middot; {{ report.meta.generated_at[:19] }}
+            </p>
+        </div>
+        <div>
+            <a href="/scan/{{ scan_id }}/download/json" class="btn btn-outline btn-sm">Download JSON</a>
+            <a href="/dashboard" class="btn btn-outline btn-sm">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="card summary-card">
+            <h3>Total Findings</h3>
+            <div class="value">{{ report.summary.total_findings }}</div>
+        </div>
+        <div class="card summary-card danger">
+            <h3>Monthly Waste</h3>
+            <div class="value">${{ "%.2f"|format(report.summary.total_monthly_waste) }}</div>
+        </div>
+        <div class="card summary-card danger">
+            <h3>Annual Waste</h3>
+            <div class="value">${{ "%.2f"|format(report.summary.total_annual_waste) }}</div>
+        </div>
+        <div class="card summary-card">
+            <h3>High Severity</h3>
+            <div class="value">
+                {{ report.summary.by_severity.high.count if report.summary.by_severity.high else 0 }}
+            </div>
+        </div>
+    </div>
+
+    <!-- By Category -->
+    {% if report.summary.by_category %}
+    <div class="card">
+        <h2>By Category</h2>
+        <table class="data-table">
+            <thead><tr><th>Category</th><th>Count</th><th>Monthly Savings</th></tr></thead>
+            <tbody>
+                {% for cat, info in report.summary.by_category.items() %}
+                <tr>
+                    <td>{{ cat.replace('_', ' ')|title }}</td>
+                    <td>{{ info.count }}</td>
+                    <td class="money savings">${{ "%.2f"|format(info.savings) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- All Findings -->
+    <div class="card">
+        <h2>All Findings</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Resource</th>
+                    <th>Category</th>
+                    <th>Severity</th>
+                    <th>Cost/Month</th>
+                    <th>Savings/Month</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in report.findings|sort(attribute='estimated_savings_monthly', reverse=true) %}
+                <tr>
+                    <td>
+                        <strong>{{ f.resource_name }}</strong><br>
+                        <small class="text-muted">{{ f.resource_group }}</small>
+                    </td>
+                    <td>{{ f.category.replace('_', ' ')|title }}</td>
+                    <td>
+                        <span class="badge badge-{{ f.severity }}">{{ f.severity|upper }}</span>
+                    </td>
+                    <td class="money">${{ "%.2f"|format(f.current_cost_monthly) }}</td>
+                    <td class="money savings">${{ "%.2f"|format(f.estimated_savings_monthly) }}</td>
+                    <td><small>{{ f.recommendation }}</small></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if report.errors %}
+    <div class="card">
+        <h2>Errors</h2>
+        {% for err in report.errors %}
+        <div class="alert alert-warning">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{
+  "audit_metadata": {
+    "tool": "Azure Cost Optimizer - Compliance Module",
+    "version": "1.0.0",
+    "generated_at": "2026-02-21T10:30:00Z",
+    "subscription_id": "12345678-abcd-1234-efgh-123456789012",
+    "subscription_name": "Contoso Production"
+  },
+  "compliance_summary": {
+    "total_policies_evaluated": 142,
+    "compliant_resources": 1847,
+    "non_compliant_resources": 23,
+    "exempt_resources": 5,
+    "compliance_percentage": 98.5
+  },
+  "categories": {
+    "security": {
+      "total": 8,
+      "non_compliant": 3,
+      "resources": [
+        "/subscriptions/.../Microsoft.Compute/virtualMachines/web-01",
+        "/subscriptions/.../Microsoft.Compute/virtualMachines/api-01",
+        "/subscriptions/.../Microsoft.Storage/storageAccounts/logs01"
+      ]
+    },
+    "networking": {
+      "total": 5,
+      "non_compliant": 2,
+      "resources": [
+        "/subscriptions/.../Microsoft.Network/networkSecurityGroups/nsg-dev",
+        "/subscriptions/.../Microsoft.Network/virtualNetworks/vnet-legacy"
+      ]
+    },
+    "data_protection": {
+      "total": 4,
+      "non_compliant": 1,
+      "resources": [
+        "/subscriptions/.../Microsoft.Sql/servers/sql-prod/databases/userdb"
+      ]
+    },
+    "monitoring": {
+      "total": 6,
+      "non_compliant": 4,
+      "resources": [
+        "/subscriptions/.../Microsoft.Compute/virtualMachines/batch-01",
+        "/subscriptions/.../Microsoft.Compute/virtualMachines/batch-02",
+        "/subscriptions/.../Microsoft.Web/sites/api-legacy",
+        "/subscriptions/.../Microsoft.Storage/storageAccounts/archive01"
+      ]
+    }
+  },
+  "non_compliant_details": [
+    {
+      "policy_name": "AzureSecurityBenchmark-DiskEncryption",
+      "resource_id": "/subscriptions/.../Microsoft.Compute/virtualMachines/web-01",
+      "resource_type": "Microsoft.Compute/virtualMachines",
+      "resource_group": "rg-prod",
+      "timestamp": "2026-02-21T09:45:00Z"
+    },
+    {
+      "policy_name": "NSG-FlowLogs-Enabled",
+      "resource_id": "/subscriptions/.../Microsoft.Network/networkSecurityGroups/nsg-dev",
+      "resource_type": "Microsoft.Network/networkSecurityGroups",
+      "resource_group": "rg-dev",
+      "timestamp": "2026-02-21T09:45:00Z"
+    },
+    {
+      "policy_name": "SQL-TDE-Encryption",
+      "resource_id": "/subscriptions/.../Microsoft.Sql/servers/sql-prod/databases/userdb",
+      "resource_type": "Microsoft.Sql/servers/databases",
+      "resource_group": "rg-prod",
+      "timestamp": "2026-02-21T09:45:00Z"
+    },
+    {
+      "policy_name": "DiagnosticLogs-Enabled",
+      "resource_id": "/subscriptions/.../Microsoft.Compute/virtualMachines/batch-01",
+      "resource_type": "Microsoft.Compute/virtualMachines",
+      "resource_group": "rg-batch",
+      "timestamp": "2026-02-21T09:45:00Z"
+    }
+  ],
+  "errors": []
+}

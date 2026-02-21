@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Sign In - Azure Cost Optimizer{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-container">
+        <h2>Sign In</h2>
+        <p>Enter your email to get started. No password required for demo.</p>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="you@company.com" class="form-input">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Continue</button>
+        </form>
+        <p class="auth-note">
+            In production, this uses Azure AD / OAuth for secure authentication.
+        </p>
+    </div>
+</div>
+{% endblock %}

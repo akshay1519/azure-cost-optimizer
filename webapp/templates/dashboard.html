@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Azure Cost Optimizer{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back, {{ session.get('user_email') }}
+                <span class="badge badge-{{ 'success' if user.plan != 'free' else 'default' }}">
+                    {{ user.plan|upper }} plan
+                </span>
+            </p>
+        </div>
+        {% if user.plan == 'free' %}
+        <a href="/pricing" class="btn btn-primary">Upgrade Plan</a>
+        {% else %}
+        <a href="/billing" class="btn btn-outline">Manage Billing</a>
+        {% endif %}
+    </div>
+
+    <!-- New Scan Form -->
+    <div class="card">
+        <h2>Run a New Scan</h2>
+        <form method="POST" action="/scan" class="scan-form">
+            <div class="form-group">
+                <label for="subscription_id">Azure Subscription ID</label>
+                <input type="text" id="subscription_id" name="subscription_id"
+                       placeholder="12345678-abcd-1234-efgh-123456789012"
+                       pattern="[0-9a-fA-F-]{36}" required class="form-input">
+                <small>Find this in the Azure Portal → Subscriptions</small>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                {% if user.plan == 'free' and scans|length >= 1 %}
+                    Upgrade to Scan Again
+                {% else %}
+                    Run Scan
+                {% endif %}
+            </button>
+            {% if user.plan == 'free' %}
+            <small class="text-muted">Free plan: {{ 1 - scans|length }} scan(s) remaining</small>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Previous Scans -->
+    {% if scans %}
+    <div class="card">
+        <h2>Previous Scans</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Subscription</th>
+                    <th>Findings</th>
+                    <th>Monthly Waste</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scan in scans|reverse %}
+                <tr>
+                    <td>{{ scan.timestamp[:19] }}</td>
+                    <td><code>{{ scan.subscription_id[:8] }}...</code></td>
+                    <td>{{ scan.findings_count }}</td>
+                    <td class="money">${{ "%.2f"|format(scan.monthly_waste) }}</td>
+                    <td>
+                        <a href="/scan/{{ scan.scan_id }}" class="btn btn-sm btn-outline">View</a>
+                        <a href="/scan/{{ scan.scan_id }}/download/json" class="btn btn-sm btn-outline">JSON</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="card empty-state">
+        <p>No scans yet. Run your first scan above!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
